@@ -31,3 +31,7 @@ def loginpage(request):
 
 def home(request):
     return render(request, 'main/home.html')
+
+
+def profile(request):
+    return render(request, 'main/profile.html')
