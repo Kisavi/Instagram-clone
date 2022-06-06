@@ -92,3 +92,21 @@ def comment(request, id):
         'comments': comments,
     }
     return render(request, 'post.html', context)
+
+def like_post(request, id):
+    post = Image.objects.get(pk=id)
+    is_liked = False
+    user = request.user.profile
+    try:
+        profile = Profile.objects.get(user=user.user)
+        print(profile)
+
+    except Profile.DoesNotExist:
+        raise Http404()
+    if post.likes.filter(id=user.user.id).exists():
+        post.likes.remove(user.user)
+        is_liked = False
+    else:
+        post.likes.add(user.user)
+        is_liked = True
+    return HttpResponseRedirect(reverse('index'))
