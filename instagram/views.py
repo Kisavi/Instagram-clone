@@ -1,12 +1,12 @@
+from .models import Image, Profile, Follow, Comment
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from .form import RegisterForm, NewPostForm
-from django.contrib.auth import login, logout, authenticate
-from django.core.mail import send_mail
-from decouple import config
-from .models import Profile, Follow, Post
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import UploadForm, ProfileForm, CommentForm, RegisterForm
+from django.urls.base import reverse
+from django.http.response import Http404
 
 # Create your views here.
 
@@ -15,13 +15,6 @@ def sign_up(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            username = request.POST['username']
-            email = request.POST['email']
-            subject = 'Welcome to The Stargram'
-            message = f'Hello {username}! We are glad that you have joined our platform. Let us make memories worthwhile.'
-            from_email = config('EMAIL_HOST_USER')
-            recipient_list = [email]
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
             form.save()
             return redirect('/login')
     else:
