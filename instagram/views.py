@@ -139,3 +139,18 @@ def update_profile(request):
     else:
         form = ProfileForm()
     return render(request, 'edit_profile.html', {"form": form})
+
+def search_profile(request):
+    if 'search_user' in request.GET and request.GET['search_user']:
+        name = request.GET.get("search_user")
+        results = Profile.search_profile(name)
+        print(results)
+        message = name
+        params = {
+            'results': results,
+            'message': message
+        }
+        return render(request, 'results.html', params)
+    else:
+        message = "You did not make a selection"
+    return render(request, 'results.html', {'message': message})
