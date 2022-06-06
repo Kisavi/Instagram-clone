@@ -72,3 +72,23 @@ def post(request):
     else:
         form = UploadForm()
     return render(request, 'post_image.html', {"form": form})
+
+def comment(request, id):
+    image = get_object_or_404(Image, pk=id)
+    comments = image.comment.all()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.photo = image
+            comment.user = request.user.profile
+            comment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentForm()
+    context = {
+        'image': image,
+        'form': form,
+        'comments': comments,
+    }
+    return render(request, 'post.html', context)
