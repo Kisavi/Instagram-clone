@@ -15,7 +15,7 @@
 
 			<div class="profile-user-settings">
 
-				<h1 class="profile-user-name">janedoe_</h1>
+				<h1 class="profile-user-name">{{user.username}}</h1>
 
 				<button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -55,7 +55,13 @@
 
 			<div class="gallery-item" tabindex="0">
 
-				<img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="">
+<!--				<img  src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="">-->
+				<img  src="{{post.image.url}}" class="gallery-image" alt="">
+				<button type="button" class="btn btn-outline-dark btn-sm m-1" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        Photo Details
+                    </button>
+
 
 				<div class="gallery-item-info">
 
@@ -67,6 +73,27 @@
 				</div>
 
 			</div>
+
+			 <!--    modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" style="width: 50rem;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{pic.category}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{pic.image.url}}"
+                             class="card-img-top">
+                        <hr>
+                        <p><b>Description:</b> {{pic.description}}</p>
+                        <p><b>Location:</b> {{pic.location}}</p>
+                        <p class="text-muted fst-italic"><b>~ </b> {{pic.pub_date}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 			<div class="gallery-item" tabindex="0">
 
