@@ -21,6 +21,15 @@ def sign_up(request):
         form = RegisterForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+def index(request):
+    images = Image.images()
+    users = User.objects.exclude(id=request.user.id)
+    context = {
+        "users": users,
+        "images": images[::1]
+    }
+    return render(request, 'index.html', context)
+
 
 def loginpage(request):
     return render(request, 'registration/login.html')
