@@ -60,17 +60,15 @@ def saved(request):
     return render(request, 'main/saved.html')
 
 
-@login_required(login_url='/accounts/login/')
-def new_post(request):
-    current_user = request.user
-    user = Profile.objects.get(user=current_user)
+def post(request):
     if request.method == 'POST':
-        form = NewPostForm(request.POST, request.FILES)
+        form = UploadForm(request.POST, request.FILES)
+        print(form.errors)
         if form.is_valid():
             post = form.save(commit=False)
-            post.user_id = request.user.id
+            post.user = request.user.profile
             post.save()
-            return redirect('/profile', username=request.user)
+            return redirect('index')
     else:
-        form = NewPostForm()
-    return render(request, 'main/newpost.html', {'form': form})
+        form = UploadForm()
+    return render(request, 'post_image.html', {"form": form})
