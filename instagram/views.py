@@ -126,3 +126,16 @@ def profile(request, username):
         'images': images,
     }
     return render(request, 'profile.html', context)
+
+
+def update_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        print(form.errors)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm()
+    return render(request, 'edit_profile.html', {"form": form})
