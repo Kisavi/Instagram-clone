@@ -110,3 +110,19 @@ def like_post(request, id):
         post.likes.add(user.user)
         is_liked = True
     return HttpResponseRedirect(reverse('index'))
+
+def profile(request, username):
+    images = request.user.profile.images.all()
+    print(images)
+    if request.method == 'POST':
+        prof_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if prof_form.is_valid():
+            prof_form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        prof_form = ProfileForm(instance=request.user.profile)
+    context = {
+        'prof_form': prof_form,
+        'images': images,
+    }
+    return render(request, 'profile.html', context)
