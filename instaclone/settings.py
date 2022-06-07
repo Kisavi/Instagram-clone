@@ -39,13 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'instagram',
-    'crispy_forms',
-    'crispy_bootstrap5',
+    'bootstrap4',
+    'cloudinary',
 ]
-
-CRISPY_ALLOWED_TEMPLATES_PACKS = 'bootstrap5'
-
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,9 +80,9 @@ WSGI_APPLICATION = 'instaclone.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'instagram',
-        'USER': 'moringa',
-        'PASSWORD': 'Access',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
     }
 }
 
@@ -136,13 +132,17 @@ LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/login'
 
 
-# Email configurations remember to install python-decouple
-EMAIL_USE_TLS = config('EMAIL_USE_TLS')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_BACKEND = config('EMAIL_BACKEND')
+CLOUDINARY_STORAGE = {
+    'cloud_name':"dcf9cfqdg",
+    'api_key': "485474568258438",
+    'api_secret': "o03PSX1St6Swn1vR6kGwjaaBr-8"
+
+}
+cloudinary.config(
+    cloud_name="dcf9cfqdg",
+    api_key="485474568258438",
+    api_secret="o03PSX1St6Swn1vR6kGwjaaBr-8"
+)
 
 AUTH_PROFILE_MODULE = 'instagram.Profile'
 
